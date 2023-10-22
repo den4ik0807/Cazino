@@ -1,0 +1,96 @@
+import random
+import pyttsx3
+import time
+spel=pyttsx3.init()
+spel.setProperty("rate",200)
+spel.setProperty("valum",1.2)
+a=1
+t=60
+spel.say('Добрый вечер, Мистер Сколько у вас фишек?')
+spel.runAndWait()
+feature=int(input())
+while a==1:
+    spel.say("На что ставите Можете выбрать любое число от 0 до 10.")
+    spel.runAndWait()
+    number = int(input())
+    spel.say("Замечательно крутим баробан")
+    spel.runAndWait()
+    ball=random.randint(0,10)
+    for i in range(2,-1,-1):
+        if number==ball:
+            feature=feature+100000
+            spel.say(f"Поздровляю, вы выйграли 100000, ваш баланс{feature}")
+            spel.runAndWait()
+            print(feature)
+            time=time.time() - start < 60
+            spel.say(f"Вы потратели {3-1} попыток")
+            spel.runAndWait()
+            spel.say("Не хотите ли продолжить?")
+            spel.runAndWait()
+            answer=input()
+            if answer=="Yes" or answer=="Да" or answer=="yes" or answer=="да":
+                spel.say("Отлично")
+                spel.runAndWait()
+                break
+            else:
+                spel.say("Ну,хорошо! Удачно отдохнуть!")
+                spel.runAndWait()
+                a=0
+                break
+        elif number!=ball and i>0:
+            spel.say("Мимо")
+            spel.runAndWait()
+            if number>ball:
+                spel.say("Ваше число больше нужного")
+                spel.runAndWait()
+                spel.say(f"У вас {i}попыток")
+                spel.runAndWait()
+                spel.say("На что ставите")
+                spel.runAndWait()
+                number = int(input())
+            elif number<ball:
+                spel.say("Ваше число меньше нужного")
+                spel.runAndWait()
+                spel.say(f"У вас {i}попыток")
+                spel.runAndWait()
+                spel.say("На что ставите.")
+                spel.runAndWait()
+                number = int(input())
+        elif i==0:
+            feature = feature - 500000
+            spel.say(f"Жаль но вы проиграли, ваш баланс{feature}")
+            spel.runAndWait()
+            print(feature)
+            spel.say("Не хотите ли продолжить?")
+            spel.runAndWait()
+            answer = input()
+            if answer == "Yes" or answer == "Да" or answer=="yes" or answer=="да":
+                spel.say("Отлично")
+                spel.runAndWait()
+                break
+            else:
+                spel.say("Ну,хорошо! Удачно отдохнуть!")
+                spel.runAndWait()
+                a = 0
+                break
+        else:
+            feature=feature-500000
+            spel.say(f"Жаль но вы проиграли, ваш баланс{feature}")
+            spel.runAndWait()
+            if feature>0:
+                spel.say("Не хотите ли продолжить?")
+                spel.runAndWait()
+                answer = input()
+                if answer=="Yes" or answer=="Да" or answer=="yes" or answer=="да":
+                    spel.say("Отлично")
+                    spel.runAndWait()
+                    break
+                else:
+                    spel.say("Ну,хорошо! Удачно отдохнуть!")
+                    spel.runAndWait()
+                    a=0
+                    break
+            else:
+                spel.say(f"Жаль но вы проиграли, ваш долг{feature+feature*2}")
+                spel.runAndWait()
+                a=0
