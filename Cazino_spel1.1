@@ -1,0 +1,173 @@
+import random
+import pyttsx3
+
+spel=pyttsx3.init()
+spel.setProperty("rate",200)
+spel.setProperty("valum",1.2)
+a=1
+t=60
+b=0
+c=1
+number = 0
+d=0
+def win(feature):
+    global с
+    print(feature)
+    spel.say(f"Поздровляю, вы выйграли 100000, ваш баланс{feature}. Не хотите ли продолжить?")
+    spel.runAndWait()
+    while c==1:
+        try:
+            answer=input()
+            c=0
+        except:
+            spel.say("Что что скажите либо да либо нет")
+            spel.runAndWait()
+            c=1
+    c=1
+    if answer == "Yes" or answer=="Да" or answer=="yes" or answer=="да":
+        spel.say("Отлично")
+        spel.runAndWait()
+        return 1
+    else:
+        spel.say("Ну,хорошо! Удачно отдохнуть!")
+        spel.runAndWait()
+        global b
+        b=1
+        return 0
+
+def away(number,ball,i):
+    spel.say("Мимо")
+    spel.runAndWait()
+    global c
+    if number > ball:
+        spel.say(f"Ваше число больше нужного. У вас {i}попыток. На что ставите")
+        spel.runAndWait()
+        return baroban(0)
+    elif number < ball:
+        spel.say(f"Ваше число меньше нужного. У вас {i}попыток. На что ставите.")
+        spel.runAndWait()
+        return baroban(0)
+
+def lose(feature):
+    print(feature)
+    spel.say(f"Жаль но вы проиграли, ваш баланс{feature}")
+    spel.runAndWait()
+    global c
+    if feature > 0:
+        spel.say("Не хотите ли продолжить?")
+        spel.runAndWait()
+        while c == 1:
+            try:
+                answer = input()
+                c = 0
+            except:
+                spel.say("Что что скажите либо да либо нет")
+                spel.runAndWait()
+                c = 1
+        c=1
+        if answer == "Yes" or answer == "Да" or answer == "yes" or answer == "да":
+            spel.say("Отлично")
+            spel.runAndWait()
+            return 1
+        else:
+            spel.say("Ну,хорошо! Удачно отдохнуть!")
+            spel.runAndWait()
+            return 0
+    else:
+        spel.say(f"Жаль но вы проиграли, ваш долг{feature + feature * 2}")
+        spel.runAndWait()
+
+        return 0
+def beginning():
+    spel.say('Добрый вечер, как вас завут?')
+    spel.runAndWait()
+    global d
+    global c
+    global feature
+    while c==1:
+        name=input()
+        try:
+            name=float(name)
+            d=1
+        except:
+            break
+        if d==1:
+            spel.say("Что что скажите ваше имя")
+            spel.runAndWait()
+    spel.say(f'{name} Сколько у вас фишек?')
+    spel.runAndWait()
+    while c==1:
+        feature = input()
+        try:
+            feature=int(feature)
+            c=0
+        except:
+            spel.say("Что что скажите сколько у вас фишек")
+            spel.runAndWait()
+            c=1
+            continue
+        if feature<0:
+            spel.say("Что что скажите сколько у вас фишек зачем мне минус")
+            spel.runAndWait()
+            с=1
+        else:
+            с=0
+    c=1
+    return feature
+def baroban(q):
+    global c
+    global number
+    while c == 1:
+        if q==1:
+            spel.say("На что ставите Можете выбрать любое число от 0 до 10.")
+            spel.runAndWait()
+        else:
+            pass
+        number = input()
+        try:
+            number = int(number)
+            c = 0
+        except:
+            c = 1
+            continue
+        c=check(number)
+    c = 1
+    if q==1:
+        spel.say("Замечательно крутим баробан")
+        spel.runAndWait()
+        ball = random.randint(0, 10)
+        return number,ball
+    else:
+        return number
+def end():
+    spel.say("a week later")
+    spel.say("Здаровтвуйте, вы снова?")
+    spel.runAndWait()
+
+def check(number):
+    if number>10 or number<0:
+        return 1
+    else:
+        return 0
+
+while a==1:
+    feature=beginning()
+    number, ball = baroban(1)
+    for i in range(2,-1,-1):
+        feature=feature+100000
+        if number==ball:
+            answer=win(feature)
+            if answer==1:
+                break
+            else:
+                a=0
+                break
+        elif number!=ball and i>0:
+            number=away(number,ball,i)
+        elif i==0:
+            feature = feature - 500000
+            a=lose(feature)
+        else:
+            feature=feature-500000
+            lose(feature)
+end()
