@@ -125,8 +125,8 @@ def lose(feature, name):
     if feature > 0:
         return check_ansver(name), feature
     else:
-        print(f"\nЖаль но вы проиграли, ваш долг {feature + feature * 200} долларов.")
-        spel.say(f"Жаль но вы проиграли, ваш долг {feature + feature * 200} долларов.")
+        print(f"\nВаш долг {feature + feature * 200} долларов.")
+        spel.say(f"Ваш долг {feature + feature * 200} долларов.")
         spel.runAndWait()
         return 0, feature
 
